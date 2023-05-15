@@ -28,6 +28,11 @@ app.use(routes);
 io.on("connection", (socket: Socket) => {
   console.log("a user connected");
 
+  socket.on("chat_message", (data) => {
+    console.log("received message " + data.message);
+    socket.broadcast.emit("chat_message", data);
+  });
+
   socket.on("disconnect", () => {
     console.log("a user disconnected");
   });
