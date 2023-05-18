@@ -47,10 +47,23 @@ This is subject to change as it may lean towards a system where you level up and
 ---
 
 ## What about Rolls?
-These are not your typical d20 rolls, instead, your modifier is taken into consideration on the likelihood of succeeding at a roll. Behind the scenes, this will be a roll out of 100, and if your roll is higher than the required "save", you succeed. 
+The rolling system works from 1-100. Generally you will have four different outcomes that are possible for each roll.
 
-*Okay, but how do I not get too overpowered and succeed everything?*
+- 1-25: Critical failure.
+- 25-50: Failure.
+- 50-75: Success.
+- 75-100 Critical success.
 
-The modifiers, while going from 0-100, will *NOT* cap out at 100% chance of "doing the thing". The exact calculation for this will be adjusted for balance as necessary until a good "middleground" has been found. (One that gives the player a sense of growth, while not making them completely busted).
+General "saving throw" type rolls, *(Like a strength check)* will come back with just the response of one of the four possible outcomes, and will be up to the expedition leader's discretion on how it plays out. 
 
-Eventually, a system will be implemented with critical failures, mild failures, mild successes, and critical successes, but for now will be a simple pass/fail check.
+*Generally, the idea is that most of these sorts of rolls only really effect your roleplaying sections in whatever way is determined by your expedition leader.*
+
+For combat, *each* attack will have four different outcomes that are possible. Here's an example: 
+
+Sword:
+- Critical failure: Attack is not usable for one turn, you drop the sword.
+- Failure: Miss.
+- Success: Hit for normal damage.
+- Critical success: Double damage.
+
+Modifiers for rolls will be capped so it's *still* possible to miss attacks, though the exact calculations for these and how they affect your rolls will be determined in the future. *Obviously this will be more creatively implemented than what was written above for the sword.*
