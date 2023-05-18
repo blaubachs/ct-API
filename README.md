@@ -95,3 +95,5 @@ Members will have the ability to do the following:
 
 1. Have a 'roleplaying' or 'action' voice which will separate out spoken words.
 2. Ability to switch from in character to out of character chatting.
+3. See your character sheet, and others.
+4. Use the 'combat' or 'roll' menu for attacks or just general rolls.
