@@ -37,7 +37,7 @@ This is subject to change as it may lean towards a system where you level up and
 ---
 - Strength: 0-100
     - Modifier for physical attacks.
-- Magic Ability: 0-100
+- Intelligence: 0-100
     - Modifier for magical attacks. 
     - This will reference a different system for magic.
 - Endurance: 0-100
