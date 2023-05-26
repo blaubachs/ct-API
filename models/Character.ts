@@ -53,6 +53,7 @@ const CharacterSchema = new Schema({
     min: [1, "Charisma must be at least 1."],
     max: [100, "Charisma must be less than 100."],
   },
+  belongsTo: { type: Schema.Types.ObjectId, ref: "User" },
 });
 
 const Character = model("Character", CharacterSchema);

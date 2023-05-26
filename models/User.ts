@@ -1,4 +1,5 @@
 import { Schema, model } from "mongoose";
+import Character from "./Character";
 import bcrypt from "bcrypt";
 
 const UserSchema = new Schema({
@@ -16,8 +17,7 @@ const UserSchema = new Schema({
     minlength: [8, "Password must be at least 8 characters long."],
     maxlength: [32, "Password must be less than 32 characters long."],
   },
-  // characters will ref Character schema
-  // characters: [{type: Schema.Types.ObjectId, ref: 'Character'}]
+  characters: [{ type: Schema.Types.ObjectId, ref: "Character" }],
 });
 
 // before saving the user, hash the password
