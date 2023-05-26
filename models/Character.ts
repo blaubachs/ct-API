@@ -54,3 +54,7 @@ const CharacterSchema = new Schema({
     max: [100, "Charisma must be less than 100."],
   },
 });
+
+const Character = model("Character", CharacterSchema);
+
+export default Character;
