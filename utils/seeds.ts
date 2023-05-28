@@ -61,7 +61,9 @@ const seedData = async () => {
     { _id: createUsers[0]._id },
     { $push: { characters: createCharacters[1]._id } }
   );
-
+  console.log(createCharacters);
+  console.log("===============");
+  console.log("Seeds completed.");
   process.exit(0);
 };
 
