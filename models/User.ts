@@ -22,7 +22,7 @@ const UserSchema = new Schema({
 
 // before saving the user, hash the password
 UserSchema.pre("save", async function save(next) {
-  if (!this.isModified("password")) return next();
+  if (!this.isNew || !this.isModified("password")) return next(); // Only hash the password if it's a new user
   try {
     const salt = await bcrypt.genSalt(10);
     this.password = await bcrypt.hash(this.password, salt);
