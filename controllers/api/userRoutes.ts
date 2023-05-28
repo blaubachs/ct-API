@@ -10,6 +10,18 @@ router.get("/", async (req: Request, res: Response) => {
   res.json(users);
 });
 
+router.get("/:id", async (req: Request, res: Response) => {
+  try {
+    const foundUser = await User.findById(req.params.id).populate("characters");
+    if (!foundUser) {
+      res.status(404).json({ msg: "No user found by that ID." });
+    }
+    res.status(200).json(foundUser);
+  } catch (err) {
+    res.status(500).json({ msg: "An error occurred", err });
+  }
+});
+
 router.post("/login", async (req: Request, res: Response) => {
   try {
     const foundUser = await User.findOne({ username: req.body.username });
