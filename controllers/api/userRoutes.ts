@@ -1,5 +1,4 @@
 import express, { Request, Response } from "express";
-import Character from "../../models/Character";
 import { User } from "../../models";
 
 const router = express.Router();

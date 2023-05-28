@@ -1,3 +1,4 @@
 import User from "./User";
+import Character from "./Character";
 
-export { User };
+export { User, Character };
