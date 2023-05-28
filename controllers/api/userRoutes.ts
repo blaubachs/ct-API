@@ -45,7 +45,15 @@ router.post("/signup", async (req: Request, res: Response) => {
   try {
     const newUser = await User.create(req.body);
     console.log(newUser);
-    res.status(200).json({ msg: "New user created", user: newUser });
+    const token = jwt.sign(
+      {
+        id: newUser._id,
+        username: newUser.username,
+      },
+      process.env.JWT_SECRET,
+      { expiresIn: "24hr" }
+    );
+    res.status(200).json({ token, user: newUser });
   } catch (err) {
     res.status(500).json({ msg: "An error occurred", err });
   }
