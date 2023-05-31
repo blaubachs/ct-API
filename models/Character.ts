@@ -7,7 +7,7 @@ const CharacterSchema = new Schema({
     unique: true,
     trim: true,
     minlength: [4, "Character name must be at least 4 characters long."],
-    maxlength: [16, "Character name must be less than 16 characters long."],
+    maxlength: [40, "Character name must be less than 40 characters long."],
   },
   description: {
     type: String,
