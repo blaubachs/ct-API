@@ -23,8 +23,9 @@ router.post("/new", async (req: Request, res: Response) => {
   }
 });
 
-router.put("/change", async (req: Request, res: Response) => {
+router.put("/change/:userId", async (req: Request, res: Response) => {
   const { charId, stat, value } = req.body;
+  const userId = req.params.userId;
 
   if (value > 100) {
     return res.status(400).json({ msg: "Stats cannot go above 100." });
@@ -38,6 +39,10 @@ router.put("/change", async (req: Request, res: Response) => {
 
     if (!character) {
       return res.status(404).json({ msg: "No character found by that id." });
+    }
+
+    if (character.belongsTo.toString() !== userId) {
+      return res.status(401).json({ msg: "Unauthorized" });
     }
 
     switch (stat) {
