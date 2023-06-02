@@ -22,6 +22,13 @@ const OptionsSchema = new Schema({
 });
 
 const ExpeditionSchema = new Schema({
+  expeditionCode: {
+    type: Number,
+    required: true,
+    unique: [true, "Expedition code must be unique."],
+    minLength: [4, "Expedition code must be at least 4 numbers long."],
+    maxLength: [16, "Expedition code must be less than 16 numbers long."],
+  },
   name: {
     type: String,
     required: true,
