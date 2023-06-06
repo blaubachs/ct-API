@@ -5,6 +5,7 @@ import routes from "./controllers";
 import http from "http";
 import { Server, Socket } from "socket.io";
 import cors from "cors";
+import socketUtils from "./utils/socketUtils";
 
 dotenv.config();
 
@@ -28,15 +29,39 @@ app.use(routes);
 io.on("connection", (socket: Socket) => {
   console.log("a user connected");
 
+  // socket.once("join room", (roomCode, { userObject }) => {
+  //   console.log(userObject);
+  //   socket.join(roomCode);
+
+  //   io.to(roomCode).emit("chat message", {
+  //     message: `${botName}: ${userObject.username} has joined the room. Welcome to CATtention!`,
+  //   });
+  //   if (!rooms[roomCode]) {
+  //     rooms[roomCode] = { users: [] };
+  //   }
+  //   rooms[roomCode].users.push(userObject);
+
+  //   io.to(roomCode).emit("users in room", rooms[roomCode].users);
+  // });
+
+  socket.once("join_main_room", async (user: any) => {
+    console.log(user);
+    const mainRoom = await socketUtils.getRoom("Main Room");
+    socket.join(String(mainRoom._id));
+
+    socket.emit("room_data", mainRoom);
+  });
+
   // !
-  // join a room
-  // push the member that joined into the room
+  // ? join a room
+  // ? push the member that joined into the room
   // need a way for user to pick a character to join with
   // need to add a way to store messages in that roomcode
 
-  socket.on("chat_message", (data) => {
+  socket.on("chat_message", (data, roomId) => {
     console.log("received message " + data.message);
-    socket.broadcast.emit("chat_message", data);
+    socket.to(roomId).emit("chat_message", data);
+    // socket.broadcast.emit("chat_message", data);
   });
 
   socket.on("disconnect", () => {
