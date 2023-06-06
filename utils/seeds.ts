@@ -70,7 +70,6 @@ const seedData = async () => {
   console.log("Creating default expedition");
 
   const createdExpedition = await Expedition.create({
-    expeditionCode: "main",
     name: "Main Room",
     owner: createUsers[3]._id,
     members: [],

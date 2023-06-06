@@ -28,6 +28,12 @@ app.use(routes);
 io.on("connection", (socket: Socket) => {
   console.log("a user connected");
 
+  // !
+  // join a room
+  // push the member that joined into the room
+  // need a way for user to pick a character to join with
+  // need to add a way to store messages in that roomcode
+
   socket.on("chat_message", (data) => {
     console.log("received message " + data.message);
     socket.broadcast.emit("chat_message", data);
