@@ -1,10 +1,11 @@
 import connection from "../config/connection";
-import { User, Character } from "../models";
+import { User, Character, Expedition } from "../models";
 
 const seedData = async () => {
   console.log("Deleting all data...");
   await User.deleteMany({});
   await Character.deleteMany({});
+  await Expedition.deleteMany({});
   console.log("Data deleted...");
   console.log("===============");
   console.log("Creating users");
@@ -21,6 +22,10 @@ const seedData = async () => {
     {
       username: "test3",
       password: "password",
+    },
+    {
+      username: "bingular",
+      password: "bingular",
     },
   ];
 
@@ -61,8 +66,27 @@ const seedData = async () => {
     { _id: createUsers[0]._id },
     { $push: { characters: createCharacters[1]._id } }
   );
-  console.log(createCharacters);
   console.log("===============");
+  console.log("Creating default expedition");
+
+  const createdExpedition = await Expedition.create({
+    expeditionCode: "main",
+    name: "Main Room",
+    owner: createUsers[3]._id,
+    members: [],
+    characters: [createCharacters[1], createCharacters[0]],
+    options: {
+      critFailThresh: 25,
+      failThresh: 50,
+      successThresh: 75,
+      critSuccessThresh: 100,
+    },
+    messages: [],
+  });
+
+  console.log(createdExpedition);
+  console.log("===============");
+
   console.log("Seeds completed.");
   process.exit(0);
 };
