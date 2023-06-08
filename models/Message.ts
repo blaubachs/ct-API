@@ -1,5 +1,6 @@
 import { Schema, model } from "mongoose";
 
+// ! need to add username
 const MessageSchema = new Schema({
   from: { type: Schema.Types.ObjectId, ref: "User" },
   content: {

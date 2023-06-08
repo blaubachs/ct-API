@@ -6,6 +6,8 @@ import http from "http";
 import { Server, Socket } from "socket.io";
 import cors from "cors";
 import socketUtils from "./utils/socketUtils";
+import { Expedition, Message } from "./models";
+import mongoose from "mongoose";
 
 dotenv.config();
 
@@ -58,9 +60,19 @@ io.on("connection", (socket: Socket) => {
   // need a way for user to pick a character to join with
   // need to add a way to store messages in that roomcode
 
-  socket.on("chat_message", (data, roomId) => {
-    console.log("received message " + data.message);
-    socket.to(roomId).emit("chat_message", data);
+  socket.on("chat_message", async (data) => {
+    console.log("received message " + data.message + " from " + data.roomId);
+
+    // ! need to create a message before we can push it to a room
+    const createMessage = await Message.create();
+
+    const addToRoom = await Expedition.findOneAndUpdate(
+      { _id: new mongoose.Types.ObjectId(data.roomId) },
+      { $push: { messages: data.message } },
+      { new: true }
+    );
+    console.log(addToRoom);
+    socket.to(data.roomId).emit("chat_message", data);
     // socket.broadcast.emit("chat_message", data);
   });
 
