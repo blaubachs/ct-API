@@ -47,7 +47,6 @@ io.on("connection", (socket: Socket) => {
   // });
 
   socket.once("join_main_room", async (user: any) => {
-    console.log(user);
     const mainRoom = await socketUtils.getRoom("Main Room");
     socket.join(String(mainRoom._id));
 
@@ -59,7 +58,7 @@ io.on("connection", (socket: Socket) => {
     const room = await socketUtils.getRoom(roomName);
     socket.join(String(room._id));
 
-    console.log(user + " has joined " + room);
+    console.log(user + " has joined " + room.name);
     socket.emit("room_data", room);
   });
 
@@ -70,9 +69,10 @@ io.on("connection", (socket: Socket) => {
   // need to add a way to store messages in that roomcode
 
   socket.on("chat_message", async (data) => {
-    console.log("received message " + data.message + " from " + data.roomId);
+    console.log(
+      "received message " + data.message.content + " from " + data.roomId
+    );
 
-    console.log(data.message);
     const createMessage = await Message.create(data.message);
 
     const addToRoom = await Expedition.findOneAndUpdate(
@@ -80,7 +80,6 @@ io.on("connection", (socket: Socket) => {
       { $push: { messages: createMessage } },
       { new: true }
     );
-    console.log(addToRoom);
     socket.to(data.roomId).emit("chat_message", data);
     // socket.broadcast.emit("chat_message", data);
   });

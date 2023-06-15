@@ -8,8 +8,23 @@ router.get("/", async (req: Request, res: Response) => {
     const allExpeditions = await Expedition.find()
       .populate("owner")
       .populate("members")
-      .populate("characters");
+      .populate("characters")
+      .populate("messages");
     res.status(200).json(allExpeditions);
+  } catch (err) {
+    res.status(500).json({ msg: "something bad happened", err });
+  }
+});
+
+router.get("/:id", async (req: Request, res: Response) => {
+  try {
+    const foundExpedition = await Expedition.findById(req.params.id)
+
+      .populate("owner")
+      .populate("members")
+      .populate("characters")
+      .populate("messages");
+    res.status(200).json(foundExpedition);
   } catch (err) {
     res.status(500).json({ msg: "something bad happened", err });
   }
