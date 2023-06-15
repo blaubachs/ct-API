@@ -54,6 +54,15 @@ io.on("connection", (socket: Socket) => {
     socket.emit("room_data", mainRoom);
   });
 
+  socket.once("join_room", async ({ roomName, user }) => {
+    console.log("received join room request");
+    const room = await socketUtils.getRoom(roomName);
+    socket.join(String(room._id));
+
+    console.log(user + " has joined " + room);
+    socket.emit("room_data", room);
+  });
+
   // !
   // ? join a room
   // ? push the member that joined into the room
@@ -63,12 +72,12 @@ io.on("connection", (socket: Socket) => {
   socket.on("chat_message", async (data) => {
     console.log("received message " + data.message + " from " + data.roomId);
 
-    // ! need to create a message before we can push it to a room
-    const createMessage = await Message.create();
+    console.log(data.message);
+    const createMessage = await Message.create(data.message);
 
     const addToRoom = await Expedition.findOneAndUpdate(
       { _id: new mongoose.Types.ObjectId(data.roomId) },
-      { $push: { messages: data.message } },
+      { $push: { messages: createMessage } },
       { new: true }
     );
     console.log(addToRoom);
