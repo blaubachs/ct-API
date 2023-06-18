@@ -31,21 +31,6 @@ app.use(routes);
 io.on("connection", (socket: Socket) => {
   console.log("a user connected");
 
-  // socket.once("join room", (roomCode, { userObject }) => {
-  //   console.log(userObject);
-  //   socket.join(roomCode);
-
-  //   io.to(roomCode).emit("chat message", {
-  //     message: `${botName}: ${userObject.username} has joined the room. Welcome to CATtention!`,
-  //   });
-  //   if (!rooms[roomCode]) {
-  //     rooms[roomCode] = { users: [] };
-  //   }
-  //   rooms[roomCode].users.push(userObject);
-
-  //   io.to(roomCode).emit("users in room", rooms[roomCode].users);
-  // });
-
   socket.once("join_main_room", async (user: any) => {
     const mainRoom = await socketUtils.getRoom("Main Room");
     socket.join(String(mainRoom._id));
@@ -53,13 +38,31 @@ io.on("connection", (socket: Socket) => {
     socket.emit("room_data", mainRoom);
   });
 
-  socket.once("join_room", async ({ roomName, user }) => {
+  socket.on("join_room", async ({ roomName, user }) => {
     console.log("received join room request");
     const room = await socketUtils.getRoom(roomName);
-    socket.join(String(room._id));
+    console.log(room);
+    if (!room) return;
 
+    // check if user is already in the room
+    if (socket.rooms.has(String(room._id))) {
+      console.log(user + " is already in " + room.name);
+      return;
+    }
+
+    socket.join(String(room._id));
     console.log(user + " has joined " + room.name);
     socket.emit("room_data", room);
+  });
+
+  socket.on("leave_room", async ({ roomName, user }) => {
+    console.log("received leave room request");
+    const room = await socketUtils.getRoom(roomName);
+    console.log(room);
+    if (!room) return;
+
+    console.log(user + " has left " + room.name);
+    socket.leave(String(room._id));
   });
 
   // !
