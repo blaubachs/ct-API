@@ -39,9 +39,8 @@ io.on("connection", (socket: Socket) => {
   });
 
   socket.on("join_room", async ({ roomName, user }) => {
-    console.log("received join room request");
+    console.log("received join room request from: " + roomName);
     const room = await socketUtils.getRoom(roomName);
-    console.log(room);
     if (!room) return;
 
     // check if user is already in the room
@@ -56,9 +55,8 @@ io.on("connection", (socket: Socket) => {
   });
 
   socket.on("leave_room", async ({ roomName, user }) => {
-    console.log("received leave room request");
+    console.log("received leave room request from:" + roomName + " ");
     const room = await socketUtils.getRoom(roomName);
-    console.log(room);
     if (!room) return;
 
     console.log(user + " has left " + room.name);
