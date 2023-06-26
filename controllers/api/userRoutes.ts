@@ -2,6 +2,8 @@ import express, { Request, Response } from "express";
 import { User } from "../../models";
 import jwt from "jsonwebtoken";
 import bcrypt from "bcrypt";
+import upload from "../../utils/multer";
+import cloudinary from "../../utils/cloudinary";
 
 const router = express.Router();
 
@@ -70,6 +72,25 @@ router.post("/signup", async (req: Request, res: Response) => {
     res.status(500).json({ msg: "An error occurred", err });
   }
 });
+
+router.post(
+  "/upload/:userId",
+  upload.single("image"),
+  async (req: Request & { file }, res: Response) => {
+    try {
+      const foundUser = await User.findById(req.params.userId);
+      if (!foundUser) {
+        res.status(404).json({ msg: "No user found by that ID." });
+      }
+
+      const result = await cloudinary.uploader.upload(req.file.path);
+
+      res.status(200).json({ result });
+    } catch (err) {
+      res.status(500).json({ msg: "An error occurred", err });
+    }
+  }
+);
 
 router.get("/token/isValidToken", async (req: Request, res: Response) => {
   try {

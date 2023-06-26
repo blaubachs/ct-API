@@ -23,7 +23,8 @@ router.post("/new", async (req: Request, res: Response) => {
   }
 });
 
-router.put("/change/:userId", async (req: Request, res: Response) => {
+// ! this needs to be updated to include user id and character id
+router.put("/update/:userId", async (req: Request, res: Response) => {
   const { charId, stat, value } = req.body;
   const userId = req.params.userId;
 
