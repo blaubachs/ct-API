@@ -73,6 +73,7 @@ router.post("/signup", async (req: Request, res: Response) => {
   }
 });
 
+// ! update this so it adds the id from cloudinary to the user's profile
 router.post(
   "/upload/:userId",
   upload.single("image"),

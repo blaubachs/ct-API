@@ -1,11 +1,12 @@
 import connection from "../config/connection";
-import { User, Character, Expedition } from "../models";
+import { User, Character, Expedition, Message } from "../models";
 
 const seedData = async () => {
   console.log("Deleting all data...");
   await User.deleteMany({});
   await Character.deleteMany({});
   await Expedition.deleteMany({});
+  await Message.deleteMany({});
   console.log("Data deleted...");
   console.log("===============");
   console.log("Creating users");
