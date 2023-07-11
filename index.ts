@@ -63,12 +63,6 @@ io.on("connection", (socket: Socket) => {
     socket.leave(String(room._id));
   });
 
-  // !
-  // ? join a room
-  // ? push the member that joined into the room
-  // need a way for user to pick a character to join with
-  // need to add a way to store messages in that roomcode
-
   socket.on("chat_message", async (data) => {
     console.log(
       "received message " + data.message.content + " from " + data.roomId
